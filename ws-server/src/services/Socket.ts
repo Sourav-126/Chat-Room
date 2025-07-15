@@ -1,4 +1,3 @@
-// services/Socket.ts
 import { WebSocketServer, WebSocket } from "ws";
 import { v4 as uuidV4 } from "uuid";
 import http from "http";
@@ -23,7 +22,6 @@ class SocketService {
   constructor(server: http.Server) {
     this._io = new WebSocketServer({ server });
 
-    // ✅ Subscribe immediately
     sub.subscribe("MESSAGES", (err, count) => {
       if (err) {
         console.error("Failed to subscribe:", err);
@@ -32,7 +30,6 @@ class SocketService {
       }
     });
 
-    // ✅ Listen and broadcast to all clients
     sub.on("message", (channel, message) => {
       if (channel === "MESSAGES") {
         console.log("[Redis -> WS] Broadcasting:", message);
